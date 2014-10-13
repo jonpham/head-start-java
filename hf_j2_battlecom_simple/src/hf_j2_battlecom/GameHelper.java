@@ -33,7 +33,7 @@ public class GameHelper {
 	public ArrayList<String> placeDotCom(int comSize) {
 		// Declare Function Locals
 		ArrayList<String> alphaCells = new ArrayList<String>(); 
-		String [] alphacoords = new String [comSize];		// ArrayList to Hold AlphaNumeric Coordinates
+		// String [] alphacoords = new String [comSize];		// ArrayList to Hold AlphaNumeric Coordinates
 		String temp = null;									// Temporary String for concat
 		int [] coords = new int[comSize];					// current candidate coords
 		int attempts = 0 ; 									// current attempts counter
@@ -56,9 +56,32 @@ public class GameHelper {
 				if (grid[location]==0) {				// Assumes that grid[int] initializes with 0's
 					coords[x++] = location;
 					location += incr;					// add `incr` to original coordinate.
-					
+					if (location >= gridSize) {
+						success = false;
+					}
+					if (x>0 && (location%gridLength==0)) {
+						success = false;
+					}
+				}
+				else {
+					System.out.print(" used "+location);
+					success = false;
 				}
 			}
+		}
+		
+		int x = 0; 
+		int row = 0;
+		int column = 0;
+		
+		while (x < comSize) {
+			grid[coords[x]]=1;
+			row = (int) (coords[x] / gridLength);
+			column = coords[x] % gridLength;
+			temp = String.valueOf(alphabet.charAt(column));
+			alphaCells.add(temp.concat(Integer.toString(row)));
+			System.out.println(alphaCells.toString());
+			x++;
 		}
 		return alphaCells;
 	}
